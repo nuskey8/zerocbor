@@ -1,0 +1,55 @@
+[package]
+name = "zerocbor-fuzz"
+version = "0.0.0"
+publish = false
+edition = "2024"
+
+# cargo-fuzz writes this marker; the crate is not a normal workspace member and
+# is never published.
+[package.metadata]
+cargo-fuzz = true
+
+[dependencies]
+libfuzzer-sys = "0.4"
+arbitrary = { version = "1", features = ["derive"] }
+zerocbor = { path = "../zerocbor", features = ["std", "derive"] }
+ciborium = "0.2"
+serde = { version = "1", features = ["derive"] }
+
+[[bin]]
+name = "seed_corpus"
+path = "src/bin/seed_corpus.rs"
+test = false
+doc = false
+bench = false
+
+[[bin]]
+name = "decode"
+path = "fuzz_targets/decode.rs"
+test = false
+doc = false
+bench = false
+
+[[bin]]
+name = "roundtrip"
+path = "fuzz_targets/roundtrip.rs"
+test = false
+doc = false
+bench = false
+
+[[bin]]
+name = "differential"
+path = "fuzz_targets/differential.rs"
+test = false
+doc = false
+bench = false
+
+[[bin]]
+name = "indefinite"
+path = "fuzz_targets/indefinite.rs"
+test = false
+doc = false
+bench = false
+
+[profile.release]
+debug = 1

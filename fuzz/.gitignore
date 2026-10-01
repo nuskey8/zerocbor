@@ -1,0 +1,7 @@
+# The seed corpus is checked in. Everything libFuzzer writes into these two is
+# machine-local: `corpus/` accumulates millions of units, and `artifacts/` holds
+# the crashes, which become regression tests instead.
+corpus/
+artifacts/
+target/
+coverage/
