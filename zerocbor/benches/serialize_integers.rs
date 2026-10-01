@@ -90,3 +90,16 @@ fn serialize_integers_minicbor(b: &mut test::Bencher) {
         }
     });
 }
+
+#[bench]
+fn serialize_integers_cbor2(b: &mut test::Bencher) {
+    let value = test::black_box(value());
+    let mut buf = Vec::with_capacity(64);
+    b.iter(|| {
+        for _ in 0..N {
+            buf.clear();
+            cbor2::to_writer(&value, &mut buf).unwrap();
+            test::black_box(&buf);
+        }
+    });
+}

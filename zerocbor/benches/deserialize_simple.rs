@@ -50,3 +50,13 @@ fn deserialize_simple_cbor4ii(b: &mut test::Bencher) {
         }
     });
 }
+
+#[bench]
+fn deserialize_simple_cbor2(b: &mut test::Bencher) {
+    let data = test::black_box(cbor2::to_vec(&Point { x: 10, y: 20 }).unwrap());
+    b.iter(|| {
+        for _ in 0..N {
+            test::black_box(cbor2::from_slice::<Point>(test::black_box(&data)).unwrap());
+        }
+    });
+}

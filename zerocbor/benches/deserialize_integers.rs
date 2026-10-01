@@ -83,3 +83,15 @@ fn deserialize_integers_minicbor(b: &mut test::Bencher) {
         }
     });
 }
+
+#[bench]
+fn deserialize_integers_cbor2(b: &mut test::Bencher) {
+    let mut bytes = Vec::new();
+    cbor2::to_writer(&value(), &mut bytes).unwrap();
+    let data = test::black_box(bytes);
+    b.iter(|| {
+        for _ in 0..N {
+            test::black_box(cbor2::from_slice::<Integers>(test::black_box(&data)).unwrap());
+        }
+    });
+}

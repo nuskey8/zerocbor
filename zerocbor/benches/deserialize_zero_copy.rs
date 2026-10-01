@@ -42,3 +42,13 @@ fn deserialize_zero_copy_cbor4ii(b: &mut test::Bencher) {
 // `ciborium` and `minicbor` are absent from the decode side: `ciborium` has no
 // borrowing deserializer, and `minicbor` 2.x borrows a byte string only as
 // `&str`, so it cannot express this type.
+
+#[bench]
+fn deserialize_zero_copy_cbor2(b: &mut test::Bencher) {
+    let data = test::black_box(cbor2::to_vec(&NoCopySerde::sample()).unwrap());
+    b.iter(|| {
+        for _ in 0..N {
+            test::black_box(cbor2::from_slice::<NoCopySerde<'_>>(test::black_box(&data)).unwrap());
+        }
+    });
+}
