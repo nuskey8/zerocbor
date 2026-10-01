@@ -52,3 +52,16 @@ fn serialize_zero_copy_cbor4ii(b: &mut test::Bencher) {
 
 // `minicbor` is absent: 2.x borrows a byte string only as `&str`, so it cannot
 // express this type.
+
+#[bench]
+fn serialize_zero_copy_cbor2(b: &mut test::Bencher) {
+    let value = test::black_box(NoCopySerde::sample());
+    let mut buf = common::output_buffer(64);
+    b.iter(|| {
+        for _ in 0..N {
+            buf.clear();
+            cbor2::to_writer(&value, &mut buf).unwrap();
+            test::black_box(&buf);
+        }
+    });
+}

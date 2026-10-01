@@ -84,3 +84,15 @@ fn deserialize_large_array_cbor4ii(b: &mut test::Bencher) {
         }
     });
 }
+
+#[bench]
+fn deserialize_large_array_cbor2(b: &mut test::Bencher) {
+    let bulk = test::black_box(cbor2::to_vec(&Bulk { x: 10, y: 20 }).unwrap());
+    let array = test::black_box(cbor2::to_vec(&values()).unwrap());
+    b.iter(|| {
+        for _ in 0..N {
+            test::black_box(cbor2::from_slice::<Bulk>(test::black_box(&bulk)).unwrap());
+            test::black_box(cbor2::from_slice::<Vec<u64>>(test::black_box(&array)).unwrap());
+        }
+    });
+}

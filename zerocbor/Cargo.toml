@@ -27,3 +27,4 @@ ciborium = "0.2"
 cbor4ii = { version = "1.2", features = ["serde1", "use_std"] }
 minicbor = { version = "2", features = ["alloc", "derive"] }
 zerocbor_derive = { path = "../zerocbor_derive" }
+cbor2 = "1.1.6"

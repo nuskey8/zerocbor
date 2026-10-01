@@ -247,7 +247,9 @@ pub struct Person {
 | `cbor4ii`      |   3.19 μs |    16.46 μs |
 | `ciborium`     |  18.40 μs |   123.92 μs |
 | `minicbor`     |  11.36 μs |    10.29 μs |
+| `cbor2`        |  10.85 μs |    32.56 μs |
 | **`zerocbor`** |   1.54 μs |     5.03 μs |
+
 
 ### Serialize/Deserialize Struct (4 fields, map format, with a nested struct, an `Option` and a `Vec`)
 
@@ -256,7 +258,9 @@ pub struct Person {
 | `cbor4ii`      |  34.52 μs |   180.49 μs |
 | `ciborium`     |  90.69 μs |   491.88 μs |
 | `minicbor`     |  64.42 μs |   150.32 μs |
+| `cbor2`        |  68.44 μs |   272.69 μs |
 | **`zerocbor`** |  24.74 μs |   122.83 μs |
+
 
 ### Serialize/Deserialize Struct (8 integer fields, one of every width)
 
@@ -264,7 +268,9 @@ pub struct Person {
 | -------------- | --------: | ----------: |
 | `ciborium`     |  87.40 μs |   357.90 μs |
 | `minicbor`     |  58.71 μs |    41.40 μs |
+| `cbor2`        |  77.93 μs |   171.06 μs |
 | **`zerocbor`** |   8.54 μs |    27.15 μs |
+
 
 ### Serialize/Deserialize Array (a 2-field struct plus a 1000-element `Vec<u64>`)
 
@@ -273,7 +279,9 @@ pub struct Person {
 | `cbor4ii`      |  2,289.96 μs |  6,544.41 μs |
 | `ciborium`     |  6,175.27 μs | 15,511.02 μs |
 | `minicbor`     | 11,050.64 μs |  5,625.04 μs |
+| `cbor2`        |  1,181.43 μs |  3,772.94 μs |
 | **`zerocbor`** |    820.06 μs |  2,376.10 μs |
+
 
 ### Serialize/Deserialize Struct (borrowed `&str` and byte string)
 
@@ -282,7 +290,9 @@ pub struct Person {
 | `cbor4ii`      |  11.74 μs |    27.33 μs |
 | `ciborium`     |  23.84 μs |         N/A |
 | `minicbor`     |       N/A |         N/A |
+| `cbor2`        |  14.02 μs |    53.67 μs |
 | **`zerocbor`** |   8.71 μs |    17.80 μs |
+
 
 ### Deserialize Array (1000 records) from a `std::io::Read` stream
 
@@ -290,15 +300,17 @@ pub struct Person {
 | -------------- | ----------: |
 | `cbor4ii`      |   124.05 μs |
 | `ciborium`     |    96.32 μs |
+| `cbor2`        |    58.44 μs |
 | **`zerocbor`** |    32.62 μs |
+
 
 ### Decode/Encode a dynamically typed document into and out of `Value`
 
 | Crate          |  Decode |    Encode |
 | -------------- | ------: | --------: |
 | `ciborium`     | 2.83 μs | 496.22 μs |
+| `cbor2`        | 1.40 μs | 342.17 μs |
 | **`zerocbor`** | 1.32 μs | 365.69 μs |
-
 
 ## License
 

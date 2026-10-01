@@ -66,3 +66,16 @@ fn serialize_complex_cbor4ii(b: &mut test::Bencher) {
         }
     });
 }
+
+#[bench]
+fn serialize_complex_cbor2(b: &mut test::Bencher) {
+    let nested = test::black_box(value());
+    let mut buf = common::output_buffer(256);
+    b.iter(|| {
+        for _ in 0..N {
+            buf.clear();
+            cbor2::to_writer(&nested, &mut buf).unwrap();
+            test::black_box(&buf);
+        }
+    });
+}

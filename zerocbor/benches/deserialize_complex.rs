@@ -57,3 +57,13 @@ fn deserialize_complex_cbor4ii(b: &mut test::Bencher) {
         }
     });
 }
+
+#[bench]
+fn deserialize_complex_cbor2(b: &mut test::Bencher) {
+    let data = test::black_box(cbor2::to_vec(&value()).unwrap());
+    b.iter(|| {
+        for _ in 0..N {
+            test::black_box(cbor2::from_slice::<Nested>(test::black_box(&data)).unwrap());
+        }
+    });
+}

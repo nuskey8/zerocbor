@@ -63,3 +63,26 @@ fn encode_value_ciborium(b: &mut test::Bencher) {
         }
     });
 }
+
+#[bench]
+fn decode_value_cbor2(b: &mut test::Bencher) {
+    let data = test::black_box(data());
+    b.bytes = data.len() as u64;
+    b.iter(|| {
+        let value: cbor2::Value = cbor2::from_slice(test::black_box(&data[..])).unwrap();
+        test::black_box(value);
+    });
+}
+
+#[bench]
+fn encode_value_cbor2(b: &mut test::Bencher) {
+    let value = test::black_box(cbor2::from_slice::<cbor2::Value>(&data()[..]).unwrap());
+    let mut buf = Vec::with_capacity(64 * 1024);
+    b.iter(|| {
+        for _ in 0..N {
+            buf.clear();
+            cbor2::to_writer(test::black_box(&value), &mut buf).unwrap();
+            test::black_box(&buf);
+        }
+    });
+}

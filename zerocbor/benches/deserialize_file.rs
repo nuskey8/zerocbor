@@ -78,3 +78,16 @@ fn deserialize_cbor4ii_file(b: &mut test::Bencher) {
 
 // `minicbor` has no `io::Read` path in 2.x: its `Decoder` borrows a `&[u8]`, so
 // there is nothing to compare `read_cbor` against here.
+
+#[bench]
+fn deserialize_cbor2_file(b: &mut test::Bencher) {
+    let path = write_temp("cbor2_points.cbor", |points| {
+        cbor2::to_vec(&points).unwrap()
+    });
+    let mut reader = reader_for(&path);
+
+    b.iter(|| {
+        reader.seek(std::io::SeekFrom::Start(0)).unwrap();
+        test::black_box(cbor2::from_reader::<Vec<Point>, _>(&mut reader).unwrap());
+    });
+}

@@ -91,3 +91,17 @@ fn serialize_large_array_cbor4ii(b: &mut test::Bencher) {
         }
     });
 }
+
+#[bench]
+fn serialize_large_array_cbor2(b: &mut test::Bencher) {
+    let (bulk, data) = test::black_box(value());
+    let mut buf = Vec::with_capacity(CAPACITY);
+    b.iter(|| {
+        for _ in 0..N {
+            buf.clear();
+            cbor2::to_writer(&bulk, &mut buf).unwrap();
+            cbor2::to_writer(&data, &mut buf).unwrap();
+            test::black_box(&buf);
+        }
+    });
+}

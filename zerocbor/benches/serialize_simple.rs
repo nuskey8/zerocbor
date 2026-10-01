@@ -57,3 +57,16 @@ fn serialize_simple_cbor4ii(b: &mut test::Bencher) {
         }
     });
 }
+
+#[bench]
+fn serialize_simple_cbor2(b: &mut test::Bencher) {
+    let point = test::black_box(Point { x: 10, y: 20 });
+    let mut buf = common::output_buffer(64);
+    b.iter(|| {
+        for _ in 0..N {
+            buf.clear();
+            cbor2::to_writer(&point, &mut buf).unwrap();
+            test::black_box(&buf);
+        }
+    });
+}
