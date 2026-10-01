@@ -2,3 +2,10 @@
 resolver = "3"
 members = ["zerocbor", "zerocbor_derive"]
 exclude = ["fuzz"]
+
+[workspace.package]
+edition = "2024"
+version = "0.1.0"
+rust-version = "1.95"
+license = "MIT"
+repository = "https://github.com/nuskey8/zerocbor"

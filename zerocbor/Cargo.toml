@@ -1,12 +1,12 @@
 [package]
 name = "zerocbor"
 description = "A zero-copy, zero-dependency, no_std-compatible, extremely fast CBOR (RFC 8949) serializer for Rust."
-version = "0.1.0"
-edition = "2024"
-rust-version = "1.95"
+edition.workspace = true
+version.workspace = true
+rust-version.workspace = true
+license.workspace = true
+repository.workspace = true
 readme = "README.md"
-license = "MIT"
-repository = "https://github.com/nuskey8/zerocbor"
 documentation = "https://docs.rs/zerocbor"
 keywords = ["cbor", "rfc8949", "serialization", "no-std", "zero-copy"]
 categories = ["encoding", "no-std", "parsing"]
@@ -15,10 +15,6 @@ categories = ["encoding", "no-std", "parsing"]
 default = ["std"]
 std = []
 derive = ["dep:zerocbor_derive"]
-# Half-precision float support, for the language's `f16` type. It is unstable,
-# so this needs a nightly compiler and is off by default: a crate that turns it
-# on does not build on the stable channel or on the MSRV. There is no
-# dependency behind it, only the `#![feature(f16)]` attribute.
 f16 = []
 
 [dependencies]

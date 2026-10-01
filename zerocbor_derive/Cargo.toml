@@ -1,11 +1,11 @@
 [package]
 name = "zerocbor_derive"
 description = "proc-macro crate for zerocbor"
-version = "0.1.0"
-edition = "2024"
-rust-version = "1.95"
-license = "MIT"
-repository = "https://github.com/nuskey8/zerocbor"
+edition.workspace = true
+version.workspace = true
+rust-version.workspace = true
+license.workspace = true
+repository.workspace = true
 documentation = "https://docs.rs/zerocbor_derive"
 keywords = ["cbor", "derive", "macros", "no-std", "serialization"]
 categories = ["development-tools::procedural-macro-helpers", "encoding"]
