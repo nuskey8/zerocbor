@@ -7,7 +7,7 @@ A zero-copy, zero-dependency, no_std-compatible, extremely fast CBOR ([RFC 8949]
 
 ## Overview
 
-zerocbor is a fast CBOR serializer for Rust. It runs about 1.5–4.5 times faster than other crates and is implemented without depending on any libraries, including `std`.
+zerocbor is a fast CBOR serializer for Rust. It runs about 1.5–4.0 times faster than other crates and is implemented without depending on any libraries, including `std`.
 
 zerocbor is based on the architecture of [zerompk](https://github.com/nuskey8/zerompk), with the serialization format switched to CBOR. zerompk is a fast MessagePack serializer characterized by high performance and a small code size compared with conventional serializers. See the zerompk README for details.
 
@@ -238,64 +238,67 @@ pub struct Person {
 
 ## Benchmarks
 
+> Measured on macOS 26.4.1 (arm64) with `rustc 1.100.0-nightly`.
+
 ### Serialize/Deserialize Struct (2 fields, array format)
 
 | Crate          | Serialize | Deserialize |
 | -------------- | --------: | ----------: |
-| `cbor4ii`      |   2.60 μs |    12.17 μs |
-| `ciborium`     |  14.67 μs |    99.96 μs |
-| `minicbor`     |   8.98 μs |     8.65 μs |
-| **`zerocbor`** |   2.10 μs |     3.99 μs |
+| `cbor4ii`      |   3.19 μs |    16.46 μs |
+| `ciborium`     |  18.40 μs |   123.92 μs |
+| `minicbor`     |  11.36 μs |    10.29 μs |
+| **`zerocbor`** |   1.54 μs |     5.03 μs |
 
 ### Serialize/Deserialize Struct (4 fields, map format, with a nested struct, an `Option` and a `Vec`)
 
 | Crate          | Serialize | Deserialize |
 | -------------- | --------: | ----------: |
-| `cbor4ii`      |  34.54 μs |   139.58 μs |
-| `ciborium`     |  78.62 μs |   388.14 μs |
-| `minicbor`     |  76.61 μs |   121.65 μs |
-| **`zerocbor`** |  21.80 μs |    92.99 μs |
+| `cbor4ii`      |  34.52 μs |   180.49 μs |
+| `ciborium`     |  90.69 μs |   491.88 μs |
+| `minicbor`     |  64.42 μs |   150.32 μs |
+| **`zerocbor`** |  24.74 μs |   122.83 μs |
 
 ### Serialize/Deserialize Struct (8 integer fields, one of every width)
 
 | Crate          | Serialize | Deserialize |
 | -------------- | --------: | ----------: |
-| `ciborium`     |  86.44 μs |   287.71 μs |
-| `minicbor`     |  54.99 μs |    32.85 μs |
-| **`zerocbor`** |   9.89 μs |    22.66 μs |
+| `ciborium`     |  87.40 μs |   357.90 μs |
+| `minicbor`     |  58.71 μs |    41.40 μs |
+| **`zerocbor`** |   8.54 μs |    27.15 μs |
 
 ### Serialize/Deserialize Array (a 2-field struct plus a 1000-element `Vec<u64>`)
 
-| Crate          |    Serialize |  Deserialize  |
+| Crate          |    Serialize |   Deserialize |
 | -------------- | -----------: | ------------: |
-| `cbor4ii`      |    785.38 μs |  5,257.50 μs |
-| `ciborium`     |  6,599.11 μs | 12,171.99 μs |
-| `minicbor`     | 14,715.36 μs |  4,456.45 μs |
-| **`zerocbor`** |    899.63 μs |  1,866.91 μs |
+| `cbor4ii`      |  2,289.96 μs |   6,544.41 μs |
+| `ciborium`     |  6,175.27 μs |  15,511.02 μs |
+| `minicbor`     | 11,050.64 μs |   5,625.04 μs |
+| **`zerocbor`** |    820.06 μs |   2,376.10 μs |
 
 ### Serialize/Deserialize Struct (borrowed `&str` and byte string)
 
 | Crate          | Serialize | Deserialize |
 | -------------- | --------: | ----------: |
-| `cbor4ii`      |   9.28 μs |    26.72 μs |
-| `ciborium`     |  18.98 μs |         N/A |
+| `cbor4ii`      |  11.74 μs |    27.33 μs |
+| `ciborium`     |  23.84 μs |         N/A |
 | `minicbor`     |       N/A |         N/A |
-| **`zerocbor`** |  12.74 μs |    13.89 μs |
+| **`zerocbor`** |   8.71 μs |    17.80 μs |
 
 ### Deserialize Array (1000 records) from a `std::io::Read` stream
 
 | Crate          | Deserialize |
 | -------------- | ----------: |
-| `cbor4ii`      |   101.10 μs |
-| `ciborium`     |    72.89 μs |
-| **`zerocbor`** |    22.52 μs |
+| `cbor4ii`      |   124.05 μs |
+| `ciborium`     |    96.32 μs |
+| **`zerocbor`** |    32.62 μs |
 
 ### Decode/Encode a dynamically typed document into and out of `Value`
 
 | Crate          |  Decode |    Encode |
 | -------------- | ------: | --------: |
-| `ciborium`     | 2.24 μs | 419.68 μs |
-| **`zerocbor`** | 1.06 μs | 514.65 μs |
+| `ciborium`     | 2.83 μs | 496.22 μs |
+| **`zerocbor`** | 1.32 μs | 365.69 μs |
+
 
 ## License
 
